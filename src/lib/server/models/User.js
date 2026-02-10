@@ -1,24 +1,11 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema(
-	{
-		firstName: {
-      type: String,
-      required: true,
-      trim: true
-    },
-		lastName: {
-      type: String,
-      required: true,
-      trim: true
-    },
-		age: {
-      type: Number,
-      required: true,
-      min: 0
-    }
-	},
-	{ timestamps: true }
-);
+// 如果之前没有定义 collection 名字，Mongoose 会默认找 "tides"
+const tideSchema = new mongoose.Schema({
+    time: { type: Date, required: true, unique: true },
+    height: { type: Number, required: true },
+    location: { type: String, default: "Vava'u" }
+});
 
-export default mongoose.models.User || mongoose.model('User', userSchema);
+// 强制指定集合名称为 'tides'
+export const Tide = mongoose.models.Tide || mongoose.model('Tide', tideSchema, 'tides');
